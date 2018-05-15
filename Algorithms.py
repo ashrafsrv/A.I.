@@ -66,11 +66,8 @@ class Algorithms:
 
         elements = []
         indices = []
-        # TODO in case of ties, use class Yes
+
         for j in range(k):
-            # idx = np.argmin(copy_distances)
-            # elements.append(copy_dataset.pop(idx))
-            # copy_distances.pop(idx)
 
             minimum = min(copy_distances)
             indices = [i for i, v in enumerate(copy_distances) if v == minimum]
