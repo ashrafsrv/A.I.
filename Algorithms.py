@@ -41,7 +41,7 @@ class Algorithms:
                 e = math.pow((example['insulin'] - instance['insulin']), 2)
                 f = math.pow((example['bmi'] - instance['bmi']), 2)
                 g = math.pow((example['pedigree'] - instance['pedigree']), 2)
-                h = g = math.pow((example['age'] - instance['age']), 2)
+                h = math.pow((example['age'] - instance['age']), 2)
 
                 distance = math.sqrt(a + b + c + d + e + f + g + h)
                 tmp.append(distance)
