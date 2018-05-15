@@ -1,4 +1,6 @@
 import math
+import numpy as np
+from numpy import array
 
 class Algorithms:
     # preg, plasma, bp, skinfold, insulin, bmi, pedigree, age, classvar
@@ -50,12 +52,41 @@ class Algorithms:
         self.training_dataset = Algorithms.transform_dataset(training_file) # A list of dictionaries
         self.test_dataset = Algorithms.transform_dataset(test_file)
         self.distances = Algorithms.calculate_distance(self.training_dataset, self.test_dataset) # A list of lists of Euclidean distances
-
+        self.results = []
 
     def run_NB(self):
         return None
 
 
+    def find_nearest_elements(self, k, distances):
+        copy_dataset = self.training_dataset[:]
+        copy_distances = distances[:]
+
+        elements = []
+        # TODO in case of ties, use class Yes
+        for i in range(k):
+            idx = np.argmin(copy_distances)
+            elements.append(copy_dataset.pop(idx))
+            copy_distances.pop(idx)
+
+        return elements
 
     def run_kNN(self, k):
-        return None
+        classes = []
+
+        for i in range(len(self.distances)):
+            elements = self.find_nearest_elements(k, self.distances[i])
+
+            yes = 0
+            no = 0
+            for example in elements:
+                if example['class'] == 'yes':
+                    yes += 1
+                elif example['class'] == 'no':
+                    no += 1
+
+            if yes >= no:
+                classes.append('yes')
+            else:
+                classes.append('no')
+        return classes

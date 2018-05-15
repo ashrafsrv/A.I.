@@ -14,9 +14,15 @@ trainingFile = sys.argv[1]
 testFile = sys.argv[2]
 algorithm = sys.argv[3]
 
-if (algorithm == "NB"):
-    Algorithms.run_NB(trainingFile, testFile)
-else:
-    algoSplit = list(algorithm)
-    if ("".join(algoSplit[1:3]) == "NN"):
-        run_kNN(int(algoSplit[0]), trainingFile, testFile)
+algo = Algorithms(trainingFile, testFile)
+classes = []
+
+if algorithm == "NB":
+    pass
+
+if algorithm[1:3] == "NN":
+    k = int(algorithm[0])
+    classes = algo.run_kNN(k)
+
+for result in classes:
+    print(result)
