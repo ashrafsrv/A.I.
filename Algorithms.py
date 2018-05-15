@@ -4,7 +4,7 @@ from numpy import array
 
 class Algorithms:
     # preg, plasma, bp, skinfold, insulin, bmi, pedigree, age, classvar
-    def transform_dataset(file_str):
+    def transform_dataset(file_str, classVar):
 
         with open(file_str) as f:
             dataset = []
@@ -21,7 +21,8 @@ class Algorithms:
                 tmp['bmi'] = float(llist[5])
                 tmp['pedigree'] = float(llist[6])
                 tmp['age'] = float(llist[7])
-                tmp['class'] = llist[8].strip()
+                if classVar:
+                    tmp['class'] = llist[8].strip()
 
                 dataset.append(tmp)
             return dataset
@@ -49,8 +50,8 @@ class Algorithms:
 
 
     def __init__(self, training_file, test_file):
-        self.training_dataset = Algorithms.transform_dataset(training_file) # A list of dictionaries
-        self.test_dataset = Algorithms.transform_dataset(test_file)
+        self.training_dataset = Algorithms.transform_dataset(training_file, classVar=True) # A list of dictionaries
+        self.test_dataset = Algorithms.transform_dataset(test_file, classVar=False)
         self.distances = Algorithms.calculate_distance(self.training_dataset, self.test_dataset) # A list of lists of Euclidean distances
         self.results = []
 
@@ -68,7 +69,6 @@ class Algorithms:
             idx = np.argmin(copy_distances)
             elements.append(copy_dataset.pop(idx))
             copy_distances.pop(idx)
-
         return elements
 
     def run_kNN(self, k):
@@ -90,3 +90,8 @@ class Algorithms:
             else:
                 classes.append('no')
         return classes
+
+    def cross_validate_kNN(self, k):
+        print(len(self.training_dataset))
+        return None
+
