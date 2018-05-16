@@ -107,3 +107,51 @@ class Algorithms:
             else:
                 classes.append('no')
         return classes
+
+    def cross_validate_kNN(self, k):
+        datasetLength = len(self.training_dataset)
+        yesList = []
+        noList = []
+        for x in self.training_dataset:
+            if x["class"] == "yes":
+                yesList.append(x)
+            elif x["class"] == "no":
+                noList.append(x)
+
+        trainingList = []
+        for i in range(10):
+            trainingList.append([])
+
+        listIndex = 0
+        while len(yesList) != 0:
+            trainingList[listIndex].append(yesList.pop())
+            listIndex += 1
+            if listIndex == 10:
+                listIndex = 0
+
+        listIndex = 0
+        while len(noList) != 0:
+            trainingList[listIndex].append(noList.pop())
+            listIndex += 1
+            if listIndex == 10:
+                listIndex = 0
+
+
+        str_ = 'fold'
+        i = 1
+        for container in trainingList:
+            print(str_ + str(i))
+            for element in container:
+                print(element['preg'], end=',')
+                print(element['plasma'], end=',')
+                print(element['bp'], end=',')
+                print(element['skinfold'], end=',')
+                print(element['insulin'], end=',')
+                print(element['bmi'], end=',')
+                print(element['pedigree'], end=',')
+                print(element['age'], end=',')
+                print(element['class'])
+            i += 1
+            print()
+
+        return None
