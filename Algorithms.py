@@ -2,6 +2,7 @@ import math
 import numpy as np
 from numpy import array
 
+
 class Algorithms:
     # preg, plasma, bp, skinfold, insulin, bmi, pedigree, age, classvar
     def transform_dataset(file_str, classVar):
@@ -49,16 +50,15 @@ class Algorithms:
 
         return distance_list
 
-
     def __init__(self, training_file, test_file):
-        self.training_dataset = Algorithms.transform_dataset(training_file, classVar=True) # A list of dictionaries
+        self.training_dataset = Algorithms.transform_dataset(training_file, classVar=True)  # A list of dictionaries
         self.test_dataset = Algorithms.transform_dataset(test_file, classVar=False)
-        self.distances = Algorithms.calculate_distance(self.training_dataset, self.test_dataset) # A list of lists of Euclidean distances
+        self.distances = Algorithms.calculate_distance(self.training_dataset,
+                                                       self.test_dataset)  # A list of lists of Euclidean distances
         self.results = []
 
     def run_NB(self):
         return None
-
 
     def find_nearest_elements(self, k, distances):
         copy_dataset = self.training_dataset[:]
@@ -81,7 +81,7 @@ class Algorithms:
                     boolean = True
                     break
 
-            if boolean == True:
+            if boolean:
                 continue
 
             elements.append(copy_dataset.pop(indices[0]))
@@ -109,7 +109,6 @@ class Algorithms:
         return classes
 
     def cross_validate_kNN(self, k):
-        datasetLength = len(self.training_dataset)
         yesList = []
         noList = []
         for x in self.training_dataset:
@@ -136,22 +135,35 @@ class Algorithms:
             if listIndex == 10:
                 listIndex = 0
 
-
         str_ = 'fold'
         i = 1
-        for container in trainingList:
-            print(str_ + str(i))
-            for element in container:
-                print(element['preg'], end=',')
-                print(element['plasma'], end=',')
-                print(element['bp'], end=',')
-                print(element['skinfold'], end=',')
-                print(element['insulin'], end=',')
-                print(element['bmi'], end=',')
-                print(element['pedigree'], end=',')
-                print(element['age'], end=',')
-                print(element['class'])
-            i += 1
-            print()
+        totalCount = len(self.training_dataset)
+        accuracy = []
+        testingSet = []
+        trainingSet = []
+        for x in range(0, len(trainingList)):
+            testingSet.append(trainingList[x])
+            trainingSet.append(trainingList[x:])
+            
+        # for container in trainingList:
+        #     self.training_dataset = container
+        #     self.distances = Algorithms.calculate_distance(container,
+        #                                                    self.test_dataset)  # A list of lists of Euclidean distances
+        #     classes = Algorithms.run_kNN(self, k)
 
+            # print(str_ + str(i))
+            # for element in container:
+            #     print(element['preg'], end=',')
+            #     print(element['plasma'], end=',')
+            #     print(element['bp'], end=',')
+            #     print(element['skinfold'], end=',')
+            #     print(element['insulin'], end=',')
+            #     print(element['bmi'], end=',')
+            #     print(element['pedigree'], end=',')
+            #     print(element['age'], end=',')
+            #     print(element['class'])
+            # i += 1
+            # print()
+
+        # totalAccuracy = sum(accuracy) /
         return None
